@@ -7,6 +7,6 @@ import CodeCell from './componants/codeCell'
 
 const App = () => {
 useEffect(() =>{init()},[])
-    return <div><CodeCell/><CodeCell/></div>
+    return <div><CodeCell/></div>
 }
 reactDOM.render(<App />, document.querySelector('#root'))

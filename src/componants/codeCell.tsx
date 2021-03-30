@@ -2,11 +2,12 @@ import { useState } from 'react'
 import CodeEditor from './code-editor'
 import Preview from './preview'
 import bundle from '../bundler'
+import Resizable from './resizable'
 
-interface Props {}
+interface Props { }
 
 function CodeCell(props: Props) {
-    const {} = props
+    const { } = props
     const [input, setInput] = useState<string>('')
     const [code, setCode] = useState<string>('')
 
@@ -14,17 +15,17 @@ function CodeCell(props: Props) {
         const output = await bundle(input)
         setCode(output)
     }
+    
     return (
-    <div>
-        <CodeEditor initialValue="" onChange={e => setInput((e && e) || '')} />
-
-        <div>
-            <button onClick={onClick}>Submit</button>
-        </div>
+        <Resizable direction="vertical">
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+        <Resizable direction="horizontal"> <CodeEditor initialValue="const a = 1;" onChange={e => setInput((e && e) || '')} /></Resizable>
         <Preview code={code} />
         </div>
+    
+    </Resizable >
+    );
+};
 
-    )
-}
 
 export default CodeCell
