@@ -14,7 +14,7 @@ export const init = async()=> {
 
 const bundler = async (rawCode: string) =>  {
 
-
+try {
     const result = await esbuild.build({
         entryPoints: ['index.js'],
         bundle: true,
@@ -27,7 +27,18 @@ const bundler = async (rawCode: string) =>  {
             'process.env.NODE_ENV': '"production"',
             global: 'window'
         }
-    })
-    return result.outputFiles[0].text
+    });
+    return {
+        code:result.outputFiles[0].text,
+        error:''
+    }
+} catch (error) {
+    return {
+        code: '',
+        error: error.message
+    }
+}
+   
+    
 };
 export default bundler

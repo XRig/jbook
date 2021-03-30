@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import './preview.css'
 interface Props {
     code: string;
+    bundleError: string;
 }
 const html = `
     <html>
@@ -33,7 +34,7 @@ const html = `
         `
 
 function Preview(props: Props) {
-    const { code } = props
+    const { code, bundleError } = props
     const iframe = useRef<any>();
 
     useEffect(() => {
@@ -50,6 +51,7 @@ function Preview(props: Props) {
     return (
         <div className="preview-wrapper">
             <iframe title='preview' ref={iframe} sandbox="allow-scripts" srcDoc={html}></iframe>
+        <div className="preview-error">{bundleError}</div>
         </div>
     )
 }

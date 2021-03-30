@@ -9,12 +9,14 @@ function CodeCell() {
     const bundleTimer = useRef<any>()
     const [input, setInput] = useState<string>('')
     const [code, setCode] = useState<string>('')
+    const [error,setError]= useState<string>('')
 
 
     useEffect(() => {
         bundleTimer.current = setTimeout(async () => {
             const output = await bundle(input)
-            setCode(output)
+            setCode(output.code)
+            setError(output.error)
         }, 1000)
 
         return () => {
@@ -34,7 +36,7 @@ function CodeCell() {
                     </div>
                 </Resizable>
                
-                <Preview code={code} />
+                <Preview code={code} bundleError={error} />
             </div>
         </Resizable >
     );
