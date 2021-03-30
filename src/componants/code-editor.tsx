@@ -2,7 +2,12 @@ import MonacoEditor from '@monaco-editor/react';
 import prettier from 'prettier'
 import parser from 'prettier/parser-babel'
 import { useRef } from 'react'
+import { parse } from "@babel/parser";
+import traverse from "@babel/traverse";
+import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
 import './code-editor.css'
+import './syntax.css'
+
 
 interface CodeEditorProps {
     initialValue: string;
@@ -11,19 +16,34 @@ interface CodeEditorProps {
 
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
-
     const editorRef = useRef<any>()
-    function handleEditorDidMount(editor:any, monaco:any) {
-        editorRef.current = editor; 
-      }
+
+
+
+    //@ts-ignore
+    const babelParse = code => parse(code, {
+        sourceType: "module",
+        plugins: ["jsx"]
+    });
+
+
+    const onEditorDidMount = (editor: any, monaco: any) => {
+        editorRef.current = editor;
+        const monacoJSXHighlighter = new MonacoJSXHighlighter(
+            //@ts-ignore
+            window.monaco, babelParse, traverse, editor)
+        monacoJSXHighlighter.highLightOnDidChangeModelContent(100);
+        monacoJSXHighlighter.addJSXCommentCommand();
+
+    }
 
     const onFormatClick = () => {
         const unformatted = editorRef.current.getValue();
         const formatted = prettier.format(unformatted, {
             parser: 'babel',
-            plugins:[parser],
-            semi:true,
-            singleQuote:true
+            plugins: [parser],
+            semi: true,
+            singleQuote: true
         }).replace(/\n$/, '')
         editorRef.current.setValue(formatted)
     }
@@ -32,7 +52,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
             <button className="button button-format is-primary is-small" onClick={onFormatClick}>Format</button>
             <MonacoEditor
                 theme="vs-dark"
-                onMount={handleEditorDidMount}
+                onMount={onEditorDidMount}
                 defaultValue={initialValue}
                 onChange={e => onChange(e)}
                 height="20vh"
