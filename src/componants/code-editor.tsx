@@ -33,7 +33,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
             //@ts-ignore
             window.monaco, babelParse, traverse, editor)
         monacoJSXHighlighter.highLightOnDidChangeModelContent(100);
-        monacoJSXHighlighter.addJSXCommentCommand();
+
 
     }
 
