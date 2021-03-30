@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import MDEditor from '@uiw/react-md-editor';
+import './text-editor.css'
 
 interface Props { }
 
 function TextEditor(props: Props) {
     const { } = props
     const [editing, setEditing] = useState(false)
-    const [value, setValue] = useState("**Hello world!!!**");
+    const [value, setValue] = useState("# Enter Text");
     const ref = useRef<HTMLDivElement|null>(null)
 
     useEffect(() => {
         const listener = (event: MouseEvent) => {
             if(!ref.current) return;
-            if(event.target && ref.current.contains(event.target as Node)) return
+            if(event.target && ref.current.contains(event.target as Node)) return;
             setEditing(false)
         }
         window.addEventListener('click', listener, { capture: true })
@@ -22,12 +23,13 @@ function TextEditor(props: Props) {
         }
     }, [])
     if (!editing) {
-        return <div onClick={() => setEditing(true)}> <MDEditor.Markdown source={value} /> </div>
+        return <div className='text-editor' onClick={() => setEditing(true)}> <MDEditor.Markdown source={value} /> </div>
     }
     return (
-        <div className="container" ref={ref}>
+        <div className="text-editor" ref={ref}>
             <MDEditor
-                value={value} />
+                value={value} 
+                onChange={(v) =>setValue(v ||'' )}/>
         </div>
     );
 
