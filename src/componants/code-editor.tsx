@@ -32,7 +32,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
         const monacoJSXHighlighter = new MonacoJSXHighlighter(
             //@ts-ignore
             window.monaco, babelParse, traverse, editor)
-        monacoJSXHighlighter.highLightOnDidChangeModelContent(100);
+        monacoJSXHighlighter.highLightOnDidChangeModelContent(100,undefined,()=>{},undefined,()=>{}); //Override Error Messages
 
 
     }
