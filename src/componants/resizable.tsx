@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './resizable.css'
 const ResizableBox = require('react-resizable').ResizableBox
 
 
 interface Props {
     direction: 'horizontal' | 'vertical'
-    children?: any
+    children: React.ReactNode
 }
 
 function Resizable(props: Props) {
@@ -13,12 +13,12 @@ function Resizable(props: Props) {
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     const [innerHeight, setInnerHeight] = useState(window.innerHeight)
     const [widthMultiplyer, setWidthMultiplyer] = useState(0.75)
+    const debounceTimer = useRef<any>()
 
-    let timer: any;
     useEffect(() => {
         const listener = () => {
-            if (timer) clearTimeout(timer)
-            timer = setTimeout(() => {
+            if (debounceTimer.current) clearTimeout(debounceTimer.current)
+            debounceTimer.current = setTimeout(() => {
                 setInnerWidth(window.innerWidth)
                 setInnerHeight(window.innerHeight)
             }, 100)

@@ -31,13 +31,18 @@ function Preview(props: Props) {
 
     useEffect(() => {
         iframe.current.srcdoc = html
-        iframe.current.contentWindow.postMessage(code, '*')
+        const timer = setTimeout(() => {
+            iframe.current.contentWindow.postMessage(code, '*')
+        }, 50)
+        return () => {
+            clearTimeout(timer)
+        }
     }, [code])
 
 
     return (
         <div className="preview-wrapper">
-        <iframe title='preview' ref={iframe} sandbox="allow-scripts" srcDoc={html}></iframe>
+            <iframe title='preview' ref={iframe} sandbox="allow-scripts" srcDoc={html}></iframe>
         </div>
     )
 }

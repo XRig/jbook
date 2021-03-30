@@ -12,7 +12,7 @@ export const init = async()=> {
 }
 
 
-export default async (rawCode: string) =>  {
+const bundler = async (rawCode: string) =>  {
 
 
     const result = await esbuild.build({
@@ -30,3 +30,4 @@ export default async (rawCode: string) =>  {
     })
     return result.outputFiles[0].text
 };
+export default bundler
