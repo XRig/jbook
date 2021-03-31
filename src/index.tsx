@@ -1,19 +1,18 @@
 import reactDOM from 'react-dom'
 import { useEffect } from 'react'
+import { init } from './bundler'
+import { Provider } from 'react-redux'
+import { store } from './state'
+import CellList from './componants/cell-list'
 import 'bulmaswatch/superhero/bulmaswatch.min.css'
-import {init} from './bundler'
-//import CodeCell from './componants/codeCell'
-import TextEditor from './componants/text-editor'
-import {Provider} from 'react-redux'
-import {store} from './state'
 
 const App = () => {
-useEffect(() =>{init()},[])
+    useEffect(() => { init() }, [])
     return (
-        <Provider store = {store}>
-    <div><TextEditor/></div>
-    </Provider>
-    
+        <Provider store={store}>
+            <CellList />
+        </Provider>
+
     )
 }
 reactDOM.render(<App />, document.querySelector('#root'))
