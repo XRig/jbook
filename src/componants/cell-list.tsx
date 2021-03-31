@@ -1,17 +1,16 @@
-import CodeCell from './codeCell'
-import TextEditor from './text-editor'
+
 import { useTypedSelector } from '../hooks/use-typed-selector'
+import CellListItem from './cell-list-item'
 
-interface Props { }
 
-function CellList(props: Props) {
-    const { } = props
-    useTypedSelector(({ cells: { order, data } }) =>
+
+function CellList() {
+    const cells = useTypedSelector(({ cells: { order, data } }) =>
         order.map((id) => data[id])
     )
+    const renderedCells = cells.map(cell => <CellListItem key={cell.id} cell={cell} />)
     return (
-        <div></div>
+        <div>{renderedCells}</div>
     )
 }
-
 export default CellList
