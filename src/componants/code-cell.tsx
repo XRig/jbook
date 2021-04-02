@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import { useAction } from '../hooks/use-action'
+import { useAction, useTypedSelector } from '../hooks'
 import CodeEditor from './code-editor'
 import Preview from './preview'
-import bundle from '../bundler'
+//import bundle from '../bundler'
 import Resizable from './resizable'
 import { Cell } from '../state'
 
@@ -13,22 +13,20 @@ interface Props {
 function CodeCell(props: Props) {
   const { cell } = props
   const bundleTimer = useRef<any>()
-  const { updateCell } = useAction();
-  const [code, setCode] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  const { updateCell, createBundle } = useAction();
+  const bundle = useTypedSelector((state)=>state.bundles[cell.id])
+console.log(bundle)
 
 
   useEffect(() => {
     bundleTimer.current = setTimeout(async () => {
-      const output = await bundle(cell.content)
-      setCode(output.code)
-      setError(output.error)
-    }, 1000)
+      createBundle(cell.id, cell.content)
+    }, 2000)
 
     return () => {
       clearTimeout(bundleTimer.current)
     }
-  }, [cell.content])
+  }, [cell.content, cell.id])
 
 
 
@@ -50,7 +48,7 @@ function CodeCell(props: Props) {
           </div>
         </Resizable>
 
-        <Preview code={code} bundleError={error} />
+        {bundle && <Preview code={bundle.code} bundleError={bundle.error} />}
       </div>
     </Resizable >
   );
