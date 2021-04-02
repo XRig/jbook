@@ -35,7 +35,13 @@ function CodeCell(props: Props) {
   return (
     <Resizable direction="vertical">
 
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+      <div
+        style={{
+          height: 'calc(100% - 10px)',
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
         <Resizable direction="horizontal">
           <div style={{ width: '100%' }} >
             <CodeEditor initialValue={cell.content}

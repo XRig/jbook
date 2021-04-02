@@ -13,8 +13,8 @@ export interface DeleteCellAction {
     type: ActionType.DELETE_CELL;
     payload: string
 }
-export interface InsertCellBeforAction {
-    type: ActionType.INSERT_CELL_BEFORE;
+export interface InsertCellAfterAction {
+    type: ActionType.INSERT_CELL_AFTER;
     payload: {
         id: string | null;
         type: CellType
@@ -31,5 +31,5 @@ export interface UpdateCellAction {
 export type Action =
     | MoveCellAction
     | DeleteCellAction
-    | InsertCellBeforAction
+    | InsertCellAfterAction
     | UpdateCellAction

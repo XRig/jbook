@@ -11,29 +11,27 @@ function CellList(props: Props) {
     const { cell } = props
     let child: JSX.Element;
     if (cell.type === 'code') {
-        child = <>
+        child = (
+        <>
             <div className="action-bar-wrapper">
                 <ActionBar id={cell.id} />
             </div>
             <CodeCell cell={cell} />
         </>
+        )
     } else {
         child = <>
-        
-        <TextEditor cell={cell} />
-        <ActionBar id={cell.id} />
-        
+            <TextEditor cell={cell} />
+            <ActionBar id={cell.id} />
         </>
     }
-    
 
 
-    return (
 
-        <div className="cell-list-item ">
-            {child}
-        </div>
-    )
+
+
+        return <div className="cell-list-item">{child}</div>;
+
 }
 
 export default CellList
