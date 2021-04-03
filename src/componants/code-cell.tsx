@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useAction, useTypedSelector } from '../hooks'
 import CodeEditor from './code-editor'
 import Preview from './preview'
@@ -26,6 +26,7 @@ console.log(bundle)
     return () => {
       clearTimeout(bundleTimer.current)
     }
+    //eslint-disable-next-line
   }, [cell.content, cell.id])
 
 

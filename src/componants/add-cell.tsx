@@ -1,5 +1,7 @@
 import './add-cell.css'
 import { useAction } from '../hooks'
+import AddCellButton from './add-cell-button';
+
 
 interface Props {
     lastCellId: string | null;
@@ -10,24 +12,11 @@ function AddCell(props: Props) {
     const { lastCellId: nextCellId, forceVisible} = props
     const { insertCellAfter } = useAction();
 
-
     return (
         <div className={`add-cell${(forceVisible && ' force-visible')||''}`}>
             <div className="add-buttons">
-
-                <button className="button is-rounded is-primary is-small" onClick={() => insertCellAfter(nextCellId, 'code')}>
-                    <span className="icon is-small">
-                    <i className="fas fa-plus" />
-                    </span>
-                    <span>Code</span>
-
-                </button>
-                <button className="button is-rounded is-primary is-small" onClick={() => insertCellAfter(nextCellId, 'text')}>
-                <span className="icon is-small">
-                    <i className="fas fa-plus" />
-                    </span>
-                    <span>Text</span>
-                </button>
+                <AddCellButton onClick={() => insertCellAfter(nextCellId, 'code')}>Code</AddCellButton>
+                <AddCellButton onClick={() => insertCellAfter(nextCellId, 'text')}>Text</AddCellButton>
             </div>
             <div className="divider"></div>
         </div>

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { BundleStartAction, BundleCompleteAction, Action } from '../actions'
+import { Action } from '../actions'
 import bundle from '../../bundler'
 import { ActionType } from '../action-types'
 
